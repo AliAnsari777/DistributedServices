@@ -1,6 +1,6 @@
 package com.aliacoding.fraud.controllers;
 
-import com.aliacoding.fraud.entities.FraudCheckResponse;
+import com.aliacoding.clients.fraud.FraudCheckResponse;
 import com.aliacoding.fraud.services.FraudCheckService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
