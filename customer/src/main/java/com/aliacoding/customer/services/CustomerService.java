@@ -4,6 +4,7 @@ import com.aliacoding.clients.fraud.FraudCheckResponse;
 import com.aliacoding.clients.fraud.FraudClient;
 import com.aliacoding.customer.entities.Customer;
 import com.aliacoding.customer.entities.CustomerRegistrationRequest;
+import com.aliacoding.customer.entities.NotificationRequest;
 import com.aliacoding.customer.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -37,5 +38,12 @@ public record CustomerService(CustomerRepository repository, RestTemplate restTe
         }
 
         // todo: send notification
+        NotificationRequest notificationRequest = new
+                NotificationRequest(customer.getId(), customer.getEmail(), "Success");
+        String notification = restTemplate.postForObject(
+                "http://NOTIFICATION/api/v1/notifications",
+                notificationRequest,
+                String.class
+        );
     }
 }
