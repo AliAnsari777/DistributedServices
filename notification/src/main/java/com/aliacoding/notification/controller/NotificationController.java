@@ -18,8 +18,8 @@ public class NotificationController {
     private final NotificationService notificationService;
 
     @PostMapping
-    public String sendNotification(@RequestBody NotificationRequest request){
+    public void sendNotification(@RequestBody NotificationRequest request){
         log.info("Sending the notification {}", request);
-        return notificationService.sendNotification(request);
+        notificationService.sendNotification(request);
     }
 }

@@ -14,17 +14,15 @@ public class NotificationService {
 
     private final NotificationRepository notificationRepository;
 
-    public String sendNotification(NotificationRequest notificationRequest) {
+    public void sendNotification(NotificationRequest notificationRequest) {
         Notification notification = Notification.builder()
                 .toCustomerId(notificationRequest.toCustomerId())
                 .toCustomerEmail(notificationRequest.toCustomerEmail())
                 .message(notificationRequest.message())
-                .sender("System")
+                .sender("Ali Ansari")
                 .sentAt(LocalDateTime.now())
                 .build();
 
-        notificationRepository.saveAndFlush(notification);
-
-        return "Notification sent by " + notification.getSender()  + " at " + notification.getSentAt();
+        notificationRepository.save(notification);
     }
 }

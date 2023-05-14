@@ -2,15 +2,17 @@ package com.aliacoding.customer.services;
 
 import com.aliacoding.clients.fraud.FraudCheckResponse;
 import com.aliacoding.clients.fraud.FraudClient;
+import com.aliacoding.clients.notification.NotificationClient;
+import com.aliacoding.clients.notification.NotificationRequest;
 import com.aliacoding.customer.entities.Customer;
 import com.aliacoding.customer.entities.CustomerRegistrationRequest;
-import com.aliacoding.customer.entities.NotificationRequest;
 import com.aliacoding.customer.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public record CustomerService(CustomerRepository repository, RestTemplate restTemplate, FraudClient fraudClient) {
+public record CustomerService(CustomerRepository repository, RestTemplate restTemplate,
+                              FraudClient fraudClient, NotificationClient notificationClient) {
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -37,13 +39,18 @@ public record CustomerService(CustomerRepository repository, RestTemplate restTe
             throw new IllegalStateException("fraudster");
         }
 
-        // todo: send notification
-        NotificationRequest notificationRequest = new
-                NotificationRequest(customer.getId(), customer.getEmail(), "Success");
-        String notification = restTemplate.postForObject(
-                "http://NOTIFICATION/api/v1/notifications",
-                notificationRequest,
-                String.class
-        );
+        // todo: add a queue to send async notification
+        // this way we used restTemplate
+//        NotificationRequest notificationRequest = new
+//                NotificationRequest(customer.getId(), customer.getEmail(), "Success");
+//        restTemplate.postForObject(
+//                "http://NOTIFICATION/api/v1/notifications",
+//                notificationRequest,
+//                String.class
+//        );
+
+        notificationClient.SendNotification(new NotificationRequest(
+                customer.getId(), customer.getEmail(), "Welcome to the club " + customer.getFirstName()
+        ));
     }
 }
