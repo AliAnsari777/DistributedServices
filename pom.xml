@@ -14,10 +14,10 @@
     <module>eureka-server</module>
       <module>clients</module>
       <module>notification</module>
+      <module>apigateway</module>
   </modules>
 
   <name>distributedservices</name>
-  <!-- FIXME change it to the project's website -->
   <url>https://www.amigoscode.com</url>
 
   <properties>
