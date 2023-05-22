@@ -1,7 +1,7 @@
 services:
   postgres:
-    container_name: postgres
     image: postgres
+    container_name: postgres
     environment:
       POSTGRES_USER: amigoscode
       POSTGRES_PASSWORD: password
@@ -15,8 +15,8 @@ services:
     restart: unless-stopped
 
   pgadmin:
-    container_name: pgadmin
     image: dpage/pgadmin4
+    container_name: pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
@@ -34,6 +34,13 @@ services:
     container_name: zipkin
     ports:
     - "9411:9411"
+
+  rabbitmq:
+    image: rabbitmq:3.9.11-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
 networks:
   postgres:
