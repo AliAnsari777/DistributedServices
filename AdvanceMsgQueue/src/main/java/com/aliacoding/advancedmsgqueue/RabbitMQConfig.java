@@ -26,7 +26,7 @@ public class RabbitMQConfig {
 
     // this method enable us to receive messages. it is a listener
     @Bean
-    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(){
+    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory() {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(jacksonConverter());
@@ -35,7 +35,7 @@ public class RabbitMQConfig {
 
     // this method will convert object to JSON, so we can send them to a queue
     @Bean
-    public MessageConverter jacksonConverter(){
+    public MessageConverter jacksonConverter() {
         return new Jackson2JsonMessageConverter();
     }
 }
