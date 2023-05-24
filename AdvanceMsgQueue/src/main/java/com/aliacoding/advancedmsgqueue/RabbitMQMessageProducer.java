@@ -12,7 +12,7 @@ public class RabbitMQMessageProducer {
 
     private final AmqpTemplate amqpTemplate;
 
-    // this is the method that allow us to send a message to any exchange by providing the exchange name and routing key
+    // this is the method that allow us to publish to any exchange by providing the exchange name and routing key
     // we put payload as object because we want to be able to send JSON or XML or any other possible type.
     public void publish(Object payload, String exchange, String routingKey) {
         log.info("Publishing to {} using routing key {}. Payload {}", exchange, routingKey, payload);
