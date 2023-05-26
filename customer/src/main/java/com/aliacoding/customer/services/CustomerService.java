@@ -1,5 +1,6 @@
 package com.aliacoding.customer.services;
 
+import com.aliacoding.advancedmsgqueue.RabbitMQMessageProducer;
 import com.aliacoding.clients.fraud.FraudCheckResponse;
 import com.aliacoding.clients.fraud.FraudClient;
 import com.aliacoding.clients.notification.NotificationClient;
@@ -12,7 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public record CustomerService(CustomerRepository repository, RestTemplate restTemplate,
-                              FraudClient fraudClient, NotificationClient notificationClient) {
+                              FraudClient fraudClient, NotificationClient notificationClient,
+                              RabbitMQMessageProducer producer) {
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -39,7 +41,6 @@ public record CustomerService(CustomerRepository repository, RestTemplate restTe
             throw new IllegalStateException("fraudster");
         }
 
-        // todo: add a queue to send async notification
         // this way we used restTemplate
 //        NotificationRequest notificationRequest = new
 //                NotificationRequest(customer.getId(), customer.getEmail(), "Success");
@@ -49,8 +50,11 @@ public record CustomerService(CustomerRepository repository, RestTemplate restTe
 //                String.class
 //        );
 
-        notificationClient.SendNotification(new NotificationRequest(
+        NotificationRequest notificationRequest = new NotificationRequest(
                 customer.getId(), customer.getEmail(), "Welcome to the club " + customer.getFirstName()
-        ));
+        );
+//        notificationClient.SendNotification(notificationRequest);
+
+        producer.publish(notificationRequest, "internal.exchange", "internal.notification.routing-key");
     }
 }
