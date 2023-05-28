@@ -1,0 +1,4 @@
+com\aliacoding\clients\fraud\FraudClient.class
+com\aliacoding\clients\notification\NotificationClient.class
+com\aliacoding\clients\fraud\FraudCheckResponse.class
+com\aliacoding\clients\notification\NotificationRequest.class

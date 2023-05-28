@@ -55,6 +55,6 @@ public record CustomerService(CustomerRepository repository, RestTemplate restTe
         );
 //        notificationClient.SendNotification(notificationRequest);
 
-        producer.publish(notificationRequest, "internal.exchange", "internal.notification.routing-key");
+        producer.publish("internal.exchange", "internal.notification.routing-key", notificationRequest);
     }
 }
