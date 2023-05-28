@@ -1,0 +1,8 @@
+S:\All Programming Code\DistributedServices\notification\src\main\java\com\aliacoding\notification\services\NotificationService.java
+S:\All Programming Code\DistributedServices\notification\src\main\java\com\aliacoding\notification\NotificationApplication.java
+S:\All Programming Code\DistributedServices\notification\src\main\java\com\aliacoding\notification\entities\Notification.java
+S:\All Programming Code\DistributedServices\notification\src\main\java\com\aliacoding\notification\rabbitmq\NotificationConsumer.java
+S:\All Programming Code\DistributedServices\notification\src\main\java\com\aliacoding\notification\repository\NotificationRepository.java
+S:\All Programming Code\DistributedServices\notification\src\main\java\com\aliacoding\notification\controller\NotificationController.java
+S:\All Programming Code\DistributedServices\notification\src\main\java\com\aliacoding\notification\NotificationConfig.java
+S:\All Programming Code\DistributedServices\notification\src\main\java\com\aliacoding\notification\entities\NotificationRequest.java
