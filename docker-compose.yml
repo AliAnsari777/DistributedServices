@@ -46,6 +46,8 @@ services:
     container_name: eureka-server
     ports:
       - "8761:8761"
+    networks:
+      - spring
     depends_on:
       - zipkin
 
@@ -54,6 +56,8 @@ services:
     container_name: apigateway
     ports:
       - "8083:8083"
+    networks:
+      - spring
     depends_on:
       - zipkin
       - eureka-server
@@ -63,6 +67,9 @@ services:
 networks:
   postgres:
     driver: bridge
+  spring:
+    driver: bridge
+
 
 volumes:
   postgres:
