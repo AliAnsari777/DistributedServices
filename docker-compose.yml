@@ -41,8 +41,40 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - spring
+
+  apigateway:
+    image: aliansri/apigateway:latest  // image address in docker hub
+    container_name: apigateway
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_PROFILE_ACTIVE=docker  // this is the new profile we created
+    networks:
+      - spring  // we should also create a new network and put all services in that network
+    depends_on:
+      - zipkin
+      - eureka-server
+
+  customer:
+    image: aliansri/customer:latest
+    container_name: customer
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILE_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - eureka-server
+      - postgres
+      - rabbitmq
+
   eureka-server:
-    image: aliansri/eureka-server
+    image: aliansri/eureka-server:latest
     container_name: eureka-server
     ports:
       - "8761:8761"
@@ -53,19 +85,37 @@ services:
     depends_on:
       - zipkin
 
-  apigateway:
-    image: aliansri/apigateway
-    container_name: apigateway
+  fraud:
+    image: aliansri/fraud:latest
+    container_name: fraud
     ports:
-      - "8083:8083"
+      - "8081:8081"
     environment:
       SPRING_PROFILE_ACTIVE=docker
     networks:
       - spring
+      - postgres
     depends_on:
       - zipkin
       - eureka-server
+      - postgres
+      - rabbitmq
 
+  notification:
+    image: aliansri/notification:latest
+    container_name: notification
+    ports:
+      - :8087:8087
+    environment:
+      SPRING_PROFILE_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - eureka-server
+      - postgres
+      - rabbitmq
 
 
 networks:
